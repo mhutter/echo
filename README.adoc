@@ -1,0 +1,25 @@
+= echo
+
+Service that echoes various attributes of the HTTP request.
+
+== Usage
+
+`/ip`:: Returns the RemoteAddr of the request
+
+== Developing
+
+I recommend using https://github.com/codegangsta/gin[gin] for livereload during development:
+
+    gin --build cmd/server
+
+To make sure everything builds as expected, use `make server` to build the
+binary locally and `make image` to build the docker image.
+
+== License
+
+MIT (see link:LICENSE[LICENSE])
+
+---
+> https://hutter.io/[Manuel Hutter] -
+> GitHub https://github.com/mhutter[@mhutter] -
+> Twitter https://twitter.com/dratir[@dratir]
