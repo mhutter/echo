@@ -31,10 +31,16 @@ func TestEchoHeaders(t *testing.T) {
 
 	req, err := http.NewRequest("GET", "/headers", nil)
 	assert.Nil(t, err)
-	req.Header.Set("Accept", "foo/bar")
-	req.Header.Add("Foo", "bar")
-	req.Header.Add("Foo", "baz")
+	req.Header = http.Header{
+		"Foo":    {"a", "c", "b"},
+		"Accept": {"foo/bar"},
+	}
 	res := httptest.NewRecorder()
 	svc.ServeHTTP(res, req)
-	assert.Equal(t, "Accept: foo/bar\nFoo: bar\nFoo: baz\n", res.Body.String())
+	expected := `Accept: foo/bar
+Foo: a
+Foo: b
+Foo: c
+`
+	assert.Equal(t, expected, res.Body.String())
 }
