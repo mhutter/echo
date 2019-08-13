@@ -1,12 +1,17 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"os"
 	"time"
 
 	"github.com/mhutter/echo"
 )
+
+func init() {
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
+}
 
 func main() {
 	port := "8000"
