@@ -5,6 +5,7 @@ Service that echoes various attributes of the HTTP request.
 == Usage
 
 `/ip`:: Returns the RemoteAddr of the request
+`/headers`:: Returns all Headers in plain text
 
 == Developing
 

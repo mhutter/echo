@@ -9,9 +9,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestEchoService(t *testing.T) {
+var svc = echo.NewService()
+
+func TestEchoIP(t *testing.T) {
 	t.Parallel()
-	svc := echo.NewService()
 
 	assert.HTTPSuccess(t, svc.ServeHTTP, "GET", "/ip", nil)
 
@@ -21,4 +22,19 @@ func TestEchoService(t *testing.T) {
 	res := httptest.NewRecorder()
 	svc.ServeHTTP(res, req)
 	assert.Equal(t, "Mah IP\n", res.Body.String())
+}
+
+func TestEchoHeaders(t *testing.T) {
+	t.Parallel()
+
+	assert.HTTPSuccess(t, svc.ServeHTTP, "GET", "/headers", nil)
+
+	req, err := http.NewRequest("GET", "/headers", nil)
+	assert.Nil(t, err)
+	req.Header.Set("Accept", "foo/bar")
+	req.Header.Add("Foo", "bar")
+	req.Header.Add("Foo", "baz")
+	res := httptest.NewRecorder()
+	svc.ServeHTTP(res, req)
+	assert.Equal(t, "Accept: foo/bar\nFoo: bar\nFoo: baz\n", res.Body.String())
 }
