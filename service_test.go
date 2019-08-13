@@ -18,10 +18,22 @@ func TestEchoIP(t *testing.T) {
 
 	req, err := http.NewRequest("GET", "/ip", nil)
 	assert.Nil(t, err)
-	req.RemoteAddr = "Mah IP"
+	req.RemoteAddr = "127.0.0.1:56789"
 	res := httptest.NewRecorder()
 	svc.ServeHTTP(res, req)
-	assert.Equal(t, "Mah IP\n", res.Body.String())
+	assert.Equal(t, "127.0.0.1:56789\n", res.Body.String())
+}
+
+func TestEchoIPForwarded(t *testing.T) {
+	t.Parallel()
+
+	req, err := http.NewRequest("GET", "/ip", nil)
+	assert.Nil(t, err)
+	req.Header.Set("X-Forwarded-For", "::1")
+	req.RemoteAddr = "127.0.0.1:56789"
+	res := httptest.NewRecorder()
+	svc.ServeHTTP(res, req)
+	assert.Equal(t, "::1\n", res.Body.String())
 }
 
 func TestEchoHeaders(t *testing.T) {

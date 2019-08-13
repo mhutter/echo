@@ -17,7 +17,13 @@ func NewService() http.Handler {
 
 // IP returns the IP of the requestor
 func IP(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, r.RemoteAddr)
+	remoteAddr := r.Header.Get("X-Forwarded-For")
+
+	if remoteAddr == "" {
+		remoteAddr = r.RemoteAddr
+	}
+
+	fmt.Fprintln(w, remoteAddr)
 }
 
 // Headers returns all headers in the request
