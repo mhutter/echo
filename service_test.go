@@ -21,7 +21,7 @@ func TestEchoIP(t *testing.T) {
 	req.RemoteAddr = "127.0.0.1:56789"
 	res := httptest.NewRecorder()
 	svc.ServeHTTP(res, req)
-	assert.Equal(t, "127.0.0.1:56789\n", res.Body.String())
+	assert.Equal(t, "127.0.0.1\n", res.Body.String())
 }
 
 func TestEchoIPForwarded(t *testing.T) {

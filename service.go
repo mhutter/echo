@@ -2,6 +2,8 @@ package echo
 
 import (
 	"fmt"
+	"log"
+	"net"
 	"net/http"
 	"sort"
 )
@@ -20,7 +22,11 @@ func IP(w http.ResponseWriter, r *http.Request) {
 	remoteAddr := r.Header.Get("X-Forwarded-For")
 
 	if remoteAddr == "" {
-		remoteAddr = r.RemoteAddr
+		host, _, err := net.SplitHostPort(r.RemoteAddr)
+		if err != nil {
+			log.Fatalln(err)
+		}
+		remoteAddr = host
 	}
 
 	fmt.Fprintln(w, remoteAddr)
