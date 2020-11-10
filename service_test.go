@@ -12,8 +12,6 @@ import (
 var svc = echo.NewService()
 
 func TestEchoIP(t *testing.T) {
-	t.Parallel()
-
 	assert.HTTPSuccess(t, svc.ServeHTTP, "GET", "/ip", nil)
 
 	req, err := http.NewRequest("GET", "/ip", nil)
@@ -25,8 +23,6 @@ func TestEchoIP(t *testing.T) {
 }
 
 func TestEchoIPForwarded(t *testing.T) {
-	t.Parallel()
-
 	req, err := http.NewRequest("GET", "/ip", nil)
 	assert.Nil(t, err)
 	req.Header.Set("X-Forwarded-For", "::1")
@@ -37,8 +33,6 @@ func TestEchoIPForwarded(t *testing.T) {
 }
 
 func TestEchoHeaders(t *testing.T) {
-	t.Parallel()
-
 	assert.HTTPSuccess(t, svc.ServeHTTP, "GET", "/headers", nil)
 
 	req, err := http.NewRequest("GET", "/headers", nil)
