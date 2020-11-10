@@ -27,5 +27,6 @@ func main() {
 		MaxHeaderBytes: 1 << 20,
 	}
 
+	log.Printf("Listening to %s\n", s.Addr)
 	s.ListenAndServe()
 }
