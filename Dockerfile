@@ -1,4 +1,4 @@
-FROM docker.io/library/golang:1.16-alpine AS build
+FROM docker.io/library/golang:1.19-alpine AS build
 
 ENV CGO_ENABLED=0 \
     GOOS=linux
